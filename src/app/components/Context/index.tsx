@@ -72,10 +72,10 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
         </div>
         <div className="flex p-2"></div>
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          <DropdownLabel htmlFor="splittingMethod">
+          {/* <DropdownLabel htmlFor="splittingMethod">
             Splitting Method:
-          </DropdownLabel>
-          <div className="relative w-full">
+          </DropdownLabel> */}
+          {/* <div className="relative w-full">
             <select
               id="splittingMethod"
               value={splittingMethod}
@@ -85,8 +85,8 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
               <option value="recursive">Recursive Text Splitting</option>
               <option value="markdown">Markdown Splitting</option>
             </select>
-          </div>
-          {splittingMethod === "recursive" && (
+          </div> */}
+          {/* {splittingMethod === "recursive" && (
             <div className="my-4 flex flex-col">
               <div className="flex flex-col w-full">
                 <DropdownLabel htmlFor="chunkSize">
@@ -115,7 +115,21 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
                 />
               </div>
             </div>
-          )}
+          )} */}
+          <p className="text-center text-lg text-zinc-100 mb-4">Data Searched Over</p>
+          <div className="flex justify-center text-blue-500">
+            <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" fill="currentcolor">
+              <line x1="50" y1="50" x2="150" y2="50" stroke="black" stroke-width="2" />                
+              <line x1="50" y1="50" x2="100" y2="120" stroke="black" stroke-width="2" />
+              <line x1="50" y1="50" x2="30" y2="120" stroke="black" stroke-width="2" />
+              <line x1="50" y1="50" x2="130" y2="20" stroke="black" stroke-width="2" />
+              <circle cx="50" cy="50" r="10" />
+              <circle cx="150" cy="50" r="10" />
+              <circle cx="100" cy="120" r="10" />
+              <circle cx="30" cy="120" r="10" />
+              <circle cx="130" cy="20" r="10" />
+            </svg>
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap w-full">
@@ -124,6 +138,16 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             <Card key={key} card={card} selected={selected} />
           ))}
       </div>
+
+      {[1,2,3,4,5,6].map((i) => 
+      (<div key={i} className="card w-full p-5 m-2 text-white bg-gray-800 opacity-60 hover:opacity-80 transition-opacity duration-300 ease-in-out">
+        <p>Data From Solid
+        </p>
+      </div>)
+      )}
+
+
+
     </div>
   );
 };

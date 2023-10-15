@@ -1,6 +1,4 @@
 import Image from "next/image";
-import PineconeLogo from "../../../public/pinecone.svg";
-import VercelLogo from "../../../public/vercel.svg";
 import DatacrateLogo from "../../../public/datacrate.svg";
 
 export default function Header({ className }: { className?: string }) {

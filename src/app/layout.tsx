@@ -1,8 +1,9 @@
-export const metadata = {
-  title: "Pinecone - Vercel AI SDK Example",
-  description: "Pinecone - Vercel AI SDK Example",
+export const metadata: Metadata = {
+  title: "LLM Demo",
+  description: "LLM Demo",
 };
 
+import { Metadata } from "next";
 import "../global.css";
 
 export default function RootLayout({
