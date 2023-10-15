@@ -31,30 +31,41 @@ export async function crawlDocument(
 
   setCards(documents);
 
-  setEntries((prevEntries: IUrlEntry[]) =>
-    prevEntries.map((entry: IUrlEntry) =>
-      entry.url === url ? { ...entry, seeded: true, loading: false } : entry
-    )
-  );
+  // artificial timeout
+  setTimeout(() => {
+    setEntries((prevEntries: IUrlEntry[]) =>
+      prevEntries.map((entry: IUrlEntry) =>
+        entry.url === url ? { ...entry, seeded: true, loading: false } : entry
+      )
+    );
+  }, Math.floor(Math.random() * (3000 - 1000 + 1)) + 1000)
 }
 
 export async function clearIndex(
   setEntries: React.Dispatch<React.SetStateAction<IUrlEntry[]>>,
   setCards: React.Dispatch<React.SetStateAction<ICard[]>>
 ) {
-  const response = await fetch("/api/clearIndex", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  });
+  // const response = await fetch("/api/clearIndex", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  // });
 
-  if (response.ok) {
-    setEntries((prevEntries: IUrlEntry[]) =>
-      prevEntries.map((entry: IUrlEntry) => ({
-        ...entry,
-        seeded: false,
-        loading: false,
-      }))
-    );
-    setCards([]);
-  }
+  // if (response.ok) {
+  // setEntries((prevEntries: IUrlEntry[]) =>
+  //   prevEntries.map((entry: IUrlEntry) => ({
+  //     ...entry,
+  //     seeded: false,
+  //     loading: false,
+  //   }))
+  // );
+  //   setCards([]);
+  // }
+  setEntries((prevEntries: IUrlEntry[]) =>
+    prevEntries.map((entry: IUrlEntry) => ({
+      ...entry,
+      seeded: false,
+      loading: false,
+    }))
+  );
+  setCards([])
 }

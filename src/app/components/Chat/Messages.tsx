@@ -1,5 +1,6 @@
 import { Message } from "ai";
 import { useRef } from "react";
+import {RiRobot2Line, RiUserFill} from "react-icons/ri"
 
 export default function Messages({ messages }: { messages: Message[] }) {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -13,7 +14,7 @@ export default function Messages({ messages }: { messages: Message[] }) {
           } my-2 p-3 rounded shadow-md hover:shadow-lg transition-shadow duration-200 flex slide-in-bottom bg-gray-800 border border-gray-600 message-glow`}
         >
           <div className="rounded-tl-lg bg-gray-800 p-2 border-r border-gray-600 flex items-center">
-            {msg.role === "assistant" ? "🤖" : "🧑‍💻"}
+            {msg.role === "assistant" ? <RiRobot2Line /> : <RiUserFill />}
           </div>
           <div className="ml-2 flex items-center text-gray-200">
             {msg.content}
@@ -21,6 +22,7 @@ export default function Messages({ messages }: { messages: Message[] }) {
         </div>
       ))}
       <div ref={messagesEndRef} />
+      <p>{JSON.stringify(messages[0]?.content)}</p>
     </div>
   );
 }
