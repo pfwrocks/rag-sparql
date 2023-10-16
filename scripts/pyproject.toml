@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "load-pinecone"
+version = "0.1.0"
+description = ""
+authors = ["g-bolmida <gbolmida@georgebolmida.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+langchain = "^0.0.315"
+python-dotenv = "^1.0.0"
+pinecone-client = "^2.2.4"
+openai = "^0.28.1"
+pandas = "^2.1.1"
+jq = "^1.6.0"
+tiktoken = "^0.5.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

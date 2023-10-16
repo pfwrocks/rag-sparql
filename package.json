@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "load-vector": "poetry install -C scripts/ && poetry run -C scripts/ python3 scripts/load-vector.py",
     "test:e2e": "playwright test",
     "test:show": "playwright show-report"
   },
