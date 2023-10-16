@@ -1,0 +1,10 @@
+load_vector:
+  image: node:lts-alpine3.18
+  only: 
+    - schedules
+    - web
+  before_script:
+    - apk add python3 py3-pip
+    - pip install poetry
+  script:
+    - npm run load-vector
