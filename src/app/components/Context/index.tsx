@@ -5,9 +5,11 @@ import { Card, ICard } from "./Card";
 import { clearIndex, crawlDocument } from "./utils";
 
 import { Button } from "./Button";
+import { set } from "zod";
 interface ContextProps {
   className: string;
   selected: string[] | null;
+  //cards: ICard[];
 }
 
 export const Context: React.FC<ContextProps> = ({ className, selected }) => {
@@ -50,12 +52,29 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
     </div>
   ));
 
+  // set example cards with data
+  useEffect(() => {
+    setCards([
+      {
+        query: `PREFIX schem: <https://schema.org/> SELECT ?movie WHERE { ?movie schem:description ?description . FILTER(CONTAINS(?description, 'space') || CONTAINS(?description, 'galaxy') || CONTAINS(?description, 'stars')) } LIMIT 15`,
+        description: `This query retrieves movies that have a description related to space, galaxy, or stars.`,
+        result: `{"head":{"vars":["movie"]},"results":{"bindings":[{"movie":{"type":"uri","value":"file:///staging/movies/walle-2008.ttl#it"}},{"movie":{"type":"uri","value":"file:///staging/movies/alien-1979.ttl#it"}},{"movie":{"type":"uri","value":"file:///staging/movies/interstellar-2014.ttl#it"}}]}}`
+      },
+      {
+        query: `PREFIX schem: <https://schema.org/> SELECT ?movie ?datePublished WHERE { ?movie schem:datePublished ?datePublished } LIMIT 1`,
+        description: `This query retrieves the datePublished of the oldest movie in the dataset.`,
+        result: `{"head":{"vars":["movie","datePublished"]},"results":{"bindings":[{"movie":{"type":"uri","value":"file:///staging/movies/city-lights-1931.ttl#it"},"datePublished":{"type":"literal","datatype":"http://www.w3.org/2001/XMLSchema#dateTime","value":"1931-02-01T00:00:00Z"}}]}}`
+      }
+    ]);
+  }
+  ,[])
+
   return (
     <div
       className={`flex flex-col border-2 overflow-y-auto rounded-lg border-gray-500 w-full ${className}`}
     >
       <div className="flex flex-col items-start sticky top-0 w-full">
-        <div className="flex flex-col items-start lg:flex-row w-full lg:flex-wrap p-2 justify-center">
+        {/*<div className="flex flex-col items-start lg:flex-row w-full lg:flex-wrap p-2 justify-center">
           {buttons}
         </div>
         <div className="flex-grow w-full px-4">
@@ -70,7 +89,7 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             Clear Index
           </Button>
         </div>
-        <div className="flex p-2"></div>
+        <div className="flex p-2"></div>*/}
         <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
           {/* <DropdownLabel htmlFor="splittingMethod">
             Splitting Method:
@@ -138,16 +157,6 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
             <Card key={key} card={card} selected={selected} />
           ))}
       </div>
-
-      {[1,2,3,4,5,6].map((i) => 
-      (<div key={i} className="card w-full p-5 m-2 text-white bg-gray-800 opacity-60 hover:opacity-80 transition-opacity duration-300 ease-in-out">
-        <p>Data From Solid
-        </p>
-      </div>)
-      )}
-
-
-
     </div>
   );
 };

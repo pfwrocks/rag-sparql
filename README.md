@@ -565,11 +565,3 @@ npm run test:e2e
 
 By default, when running locally, if errors are encountered, Playwright will open an HTML report showing which 
 tests failed and for which browser drivers.
-
-## Displaying test reports locally 
-
-To display the latest test report locally, run: 
-```
-npm run test:show
-```
-

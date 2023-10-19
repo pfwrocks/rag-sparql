@@ -23,15 +23,19 @@ const InstructionModal: React.FC<InstructionModalProps> = ({
         </button>
         <h2 className="text-2xl font-bold mb-4">Instructions</h2>
         <p>
-          This chatbot uses RDF for RAG. In the context panel on the right, you can
-          see some sources you can index on (on mobile, open the
+          This chatbot uses SPARQL for RAG. For this demo we have loaded some sample user data that you can query across. All data that apps will generate on the datacrate.io platform will be in formats queriable by SPARQL. As you ask questions, if the answer will be made from user data, the queries made in order to get your answer will be displayed on the right panel (on mobile, open the
           context panel by clicking the button at the top left of the message
           panel). Click on the blue link icons to open the TRTL file in a new window.
         </p>
         <br />
         <p>
-          After selecting from the sources, you can ask the chatbot questions about the
-          data. The chatbot will run queries against these sources to pull relevant data.
+          Examples of the types of data loaded for this demo:
+          <ul>
+            <li>- Movies (With various metadata about the movies as well as when the user watched them or added them to their list)</li>
+            <li>- Chat (This includes three different fake chat threads between different fictional characters)</li>
+            <li>- Recipes (This includes a list of recipes as well as the ingredients and instructions for each recipe)</li>
+            <li>- and Calendar (This includes various calendar events that the ficticious user has added to their calendar)</li>
+          </ul>
         </p>
         <br />
         <p>
@@ -40,10 +44,6 @@ const InstructionModal: React.FC<InstructionModalProps> = ({
           before running more precise ones.
         </p>
         <br />
-        <p>
-          You can clear the index by clicking the <span className="bg-zinc-600 text-zinc-100 px-1 py-1 rounded">Clear Index</span> button
-          in the context panel.
-        </p>
       </div>
       <div
         className="absolute inset-0 bg-black z-20 opacity-50"
