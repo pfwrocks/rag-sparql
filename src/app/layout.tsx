@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+
 export const metadata: Metadata = {
   title: "LLM Demo",
   description: "LLM Demo",
@@ -13,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>{children}<Analytics/></body>
     </html>
   );
 }
