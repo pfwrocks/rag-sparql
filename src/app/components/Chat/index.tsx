@@ -1,5 +1,4 @@
 // Chat.tsx
-
 import React, { FormEvent, ChangeEvent } from "react";
 import Messages from "./Messages";
 import { Message } from "ai/react";

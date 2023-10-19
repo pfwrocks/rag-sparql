@@ -22,7 +22,6 @@ export default function Messages({ messages }: { messages: Message[] }) {
         </div>
       ))}
       <div ref={messagesEndRef} />
-      <p>{JSON.stringify(messages[0]?.content)}</p>
     </div>
   );
 }

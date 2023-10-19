@@ -1,0 +1,184 @@
+{
+  "http://purl.org/dc/terms/created": {
+    "predicateSummary": "Indicates the creation date of the Movie resource or the WatchAction resource.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":b995e4fa-4222-45ff-819f-febc4e4296d2",
+        "object": "2023-09-27T23:54:16Z"
+      },
+      {
+        "typeTriple": ":it",
+        "object": "2023-09-27T23:54:16Z"
+      }
+    ]
+  },
+  "http://purl.org/dc/terms/modified": {
+    "predicateSummary": "Indicates the modification date of the resource.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "2023-09-27T23:54:16Z"
+      }
+    ]
+  },
+  "https://schema.org/Movie": {
+    "predicateSummary": "Indicates that the resource is a movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it"
+      }
+    ]
+  },
+  "https://schema.org/keywords": {
+    "predicateSummary": "Specifies keywords associated with the resource.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "alien, space, spaceship, extraterrestrial, horror"
+      }
+    ]
+  },
+  "https://schema.org/genre": {
+    "predicateSummary": "Specifies the genre of the movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "Science Fiction, Horror"
+      }
+    ]
+  },
+  "https://schema.org/Person": {
+    "predicateSummary": "Indicates that the resource is a person.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":sigourneyWeaver"
+      },
+      {
+        "typeTriple": ":johnHurt"
+      },
+      {
+        "typeTriple": ":ianHolm"
+      }
+    ]
+  },
+  "https://schema.org/actor": {
+    "predicateSummary": "Specifies the actors in the movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": [
+          ":sigourneyWeaver",
+          ":johnHurt",
+          ":ianHolm"
+        ]
+      }
+    ]
+  },
+  "https://schema.org/WatchAction": {
+    "predicateSummary": "Indicates an action of watching.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":b995e4fa-4222-45ff-819f-febc4e4296d2"
+      }
+    ]
+  },
+  "https://schema.org/endTime": {
+    "predicateSummary": "Indicates the end time of the watch action.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":b995e4fa-4222-45ff-819f-febc4e4296d2",
+        "object": "2023-09-27T23:54:16Z"
+      }
+    ]
+  },
+  "https://schema.org/object": {
+    "predicateSummary": "Specifies the object being watched.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":b995e4fa-4222-45ff-819f-febc4e4296d2",
+        "object": ":it"
+      }
+    ]
+  },
+  "https://schema.org/startTime": {
+    "predicateSummary": "Indicates the start time of the watch action.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":b995e4fa-4222-45ff-819f-febc4e4296d2",
+        "object": "2023-09-27T23:54:16Z"
+      }
+    ]
+  },
+  "https://schema.org/datePublished": {
+    "predicateSummary": "Indicates the publication date of the movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "1979-05-25T00:00:00Z"
+      }
+    ]
+  },
+  "https://schema.org/predicateSummary": {
+    "predicateSummary": "Provides a predicateSummary of the movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "During its return to the earth, commercial spaceship Nostromo intercepts a distress signal from a distant planet. When a three-member team of the crew discovers a chamber containing thousands of eggs on the planet, a creature inside one of the eggs attacks an explorer. The entire crew is unaware of the impending nightmare set to descend upon them when the alien parasite planted inside its unfortunate host is birthed."
+      }
+    ]
+  },
+  "https://schema.org/image": {
+    "predicateSummary": "Provides an image URL of the movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg"
+      }
+    ]
+  },
+  "https://schema.org/name": {
+    "predicateSummary": "Specifies the name of the person or movie.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": "Alien"
+      },
+      {
+        "typeTriple": ":sigourneyWeaver",
+        "object": "Sigourney Weaver"
+      },
+      {
+        "typeTriple": ":johnHurt",
+        "object": "John Hurt"
+      },
+      {
+        "typeTriple": ":ianHolm",
+        "object": "Ian Holm"
+      }
+    ]
+  },
+  "https://schema.org/sameAs": {
+    "predicateSummary": "Provides URLs that assert the identity of the typeTriple in the context of another web-based resource.",
+    "exampleUsage": [
+      {
+        "typeTriple": ":it",
+        "object": [
+          "https://www.imdb.com/title/tt0078748",
+          "https://www.themoviedb.org/movie/348"
+        ]
+      },
+      {
+        "typeTriple": ":sigourneyWeaver",
+        "object": "https://www.imdb.com/name/nm0000244/"
+      },
+      {
+        "typeTriple": ":johnHurt",
+        "object": "https://www.imdb.com/name/nm0000457/"
+      },
+      {
+        "typeTriple": ":ianHolm",
+        "object": "https://www.imdb.com/name/nm0000453/"
+      }
+    ]
+  }
+}

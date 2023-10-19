@@ -1,31 +1,24 @@
-import { ScoredVector } from "@pinecone-database/pinecone";
-import { getMatchesFromEmbeddings } from "./pinecone";
-import { getEmbeddings } from './embeddings'
+import { Pinecone, Index, RecordMetadata } from "@pinecone-database/pinecone";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 
-export type Metadata = {
-  url: string,
-  text: string,
-  chunk: string,
-}
+export const getContext = async (lastMessage: any): Promise<string> => {
+  const pinecone = new Pinecone();
 
-// The function `getContext` is used to retrieve the context of a given message
-export const getContext = async (message: string, namespace: string, maxTokens = 3000, minScore = 0.7, getOnlyText = true): Promise<string | ScoredVector[]> => {
-
-  // Get the embeddings of the input message
-  const embedding = await getEmbeddings(message);
-
-  // Retrieve the matches for the embeddings from the specified namespace
-  const matches = await getMatchesFromEmbeddings(embedding, 3, namespace);
-
-  // Filter out the matches that have a score lower than the minimum score
-  const qualifyingDocs = matches.filter(m => m.score && m.score > minScore);
-
-  if (!getOnlyText) {
-    // Use a map to deduplicate matches by URL
-    return qualifyingDocs
+  const indexEnv: string | undefined = process.env.PINECONE_INDEX;
+  if (indexEnv === undefined) {
+    throw new Error("PINECONE_INDEX is undefined");
   }
 
-  let docs = matches ? qualifyingDocs.map(match => (match.metadata as Metadata).chunk) : [];
-  // Join all the chunks of text together, truncate to the maximum number of tokens, and return the result
-  return docs.join("\n").substring(0, maxTokens)
-}
+  const pineconeIndex: Index<RecordMetadata> = pinecone.Index(indexEnv);
+
+  const vectorStore: PineconeStore = await PineconeStore.fromExistingIndex(
+    new OpenAIEmbeddings(),
+    { pineconeIndex }
+  );
+
+  const results = await vectorStore.similaritySearch(lastMessage, 2);
+  
+  // take all the pageContent from the results array and flatten to a single string
+  return results.map((result) => result.pageContent).join("\n");
+};
