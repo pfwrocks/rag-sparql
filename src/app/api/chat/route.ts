@@ -12,14 +12,10 @@ import { z } from "zod";
 
 export const runtime = 'edge'
 
-console.log('edge running!')
-
 // History formatter
 const formatMessage = (message: VercelChatMessage) => {
   return `${message.role}: ${message.content}`;
 };
-
-console.log('edge 2')
 
 // Define models
 const gpt3 = new OpenAI({
@@ -28,28 +24,20 @@ const gpt3 = new OpenAI({
   temperature: 0
 });
 
-console.log('edge 3')
-
 const chatGpt3 = new ChatOpenAI({
   modelName: "gpt-3.5-turbo",
   streaming: true,
   temperature: 0
 });
 
-console.log('edge 4')
-
 export async function POST(req: NextRequest) {
   try {
-    console.log('post 1')
     // Get the past messages from request body
     const { messages } = await req.json();
-    console.log('post 2')
     const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-    console.log('post 3')
 
     // Get the last message sent
     const lastMessage = messages[messages.length - 1].content;
-    console.log('post 4')
 
     // Determine if the message is asking a question and whether or not it is a question that should be answered with a sparql query
     const routerChain = RunnableSequence.from([
@@ -65,8 +53,6 @@ export async function POST(req: NextRequest) {
       new StringOutputParser(),
     ]);
 
-    console.log('post 5')
-
     // Chain for general questions that do not initiate a SPARQL query
     const generalChain = PromptTemplate.fromTemplate(
       `You're Datacrate.io's AI assistant, you can answer questions about the platform, user data, and your abilities. If unsure how to respond, apologize to the user. Keep answers brief. Questions will be within <>.
@@ -77,8 +63,6 @@ export async function POST(req: NextRequest) {
       Question: <{question}>
       `
     ).pipe(chatGpt3).pipe(new BytesOutputParser());
-
-    console.log('post 6')
 
     // Set parser for the SPARQL chain
     const sparqlParser = StructuredOutputParser.fromZodSchema(
@@ -91,8 +75,6 @@ export async function POST(req: NextRequest) {
           .describe("description of SPARQL query"),
       })
     );
-
-    console.log('post 7')
 
     // Chain to generate SPARQL queries
     const sparqlChain = PromptTemplate.fromTemplate(
@@ -122,7 +104,6 @@ export async function POST(req: NextRequest) {
       {format_instructions}
     `).pipe(gpt3).pipe(sparqlParser);
 
-    console.log('post 8')
 
     // Chain to give the final response to users after a SPARQL chain
     const responseChain = PromptTemplate.fromTemplate(
@@ -139,7 +120,6 @@ export async function POST(req: NextRequest) {
       `
     ).pipe(chatGpt3).pipe(new BytesOutputParser());
 
-    console.log('post 9')
 
     // invoke the router chain
     const routerRes = await routerChain.invoke({
@@ -147,7 +127,6 @@ export async function POST(req: NextRequest) {
       chat_history: formattedPreviousMessages.join("\n"),
     });
 
-    console.log('post 10')
 
     if (routerRes.toLowerCase().includes("sparql")) {
 

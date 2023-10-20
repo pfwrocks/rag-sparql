@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import { useChat } from "ai/react";
 import React, { FormEvent, useRef, useState } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import GraphAnimation from "./components/GraphAnimation";
 import InstructionModal from "./components/InstructionModal";
 import { Query } from "./components/Query/index";
 
@@ -29,7 +30,7 @@ import { Query } from "./components/Query/index";
 // ]
 
 const Page: React.FC = () => {
-  const [gotMessages, setGotMessages] = useState(false);
+  const [gotMessages, setGotMessages] = useState(true);
   const [context, setContext] = useState<string[] | null>(null);
   const [queries, setQueries] = useState<Query[]>([]);
   const [isModalOpen, setModalOpen] = useState(true);
@@ -147,7 +148,7 @@ const Page: React.FC = () => {
     >
       <div className="flex flex-col items-start sticky top-0 w-full">
 
-        { !gotMessages && <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
+        {/* { !gotMessages && <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
           <div className="flex justify-center text-blue-500">
             <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" fill="currentcolor">
               <line x1="50" y1="50" x2="150" y2="50" stroke="black" strokeWidth="2" />                
@@ -162,7 +163,8 @@ const Page: React.FC = () => {
             </svg>
           </div>
           <p className="text-center text-lg text-zinc-100 mb-4">Searching...</p>
-        </div> }
+        </div> } */}
+        { !gotMessages && <GraphAnimation /> }
         { gotMessages && queries.map((q) => <Query key={q.query} query={q.query} description={q.description} result={q.result} />)}
       </div>
       </div>
