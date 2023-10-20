@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import ReactMarkdown from "react-markdown";
 
 export interface ICard {

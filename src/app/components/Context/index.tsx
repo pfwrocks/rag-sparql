@@ -1,11 +1,9 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { urls } from "./urls";
-import UrlButton from "./UrlButton";
+import React, { useEffect, useState } from "react";
 import { Card, ICard } from "./Card";
-import { clearIndex, crawlDocument } from "./utils";
+import UrlButton from "./UrlButton";
+import { urls } from "./urls";
+import { crawlDocument } from "./utils";
 
-import { Button } from "./Button";
-import { set } from "zod";
 interface ContextProps {
   className: string;
   selected: string[] | null;
@@ -138,10 +136,10 @@ export const Context: React.FC<ContextProps> = ({ className, selected }) => {
           <p className="text-center text-lg text-zinc-100 mb-4">Data Searched Over</p>
           <div className="flex justify-center text-blue-500">
             <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" fill="currentcolor">
-              <line x1="50" y1="50" x2="150" y2="50" stroke="black" stroke-width="2" />                
-              <line x1="50" y1="50" x2="100" y2="120" stroke="black" stroke-width="2" />
-              <line x1="50" y1="50" x2="30" y2="120" stroke="black" stroke-width="2" />
-              <line x1="50" y1="50" x2="130" y2="20" stroke="black" stroke-width="2" />
+              <line x1="50" y1="50" x2="150" y2="50" stroke="black" strokeWidth="2" />                
+              <line x1="50" y1="50" x2="100" y2="120" stroke="black" strokeWidth="2" />
+              <line x1="50" y1="50" x2="30" y2="120" stroke="black" strokeWidth="2" />
+              <line x1="50" y1="50" x2="130" y2="20" stroke="black" strokeWidth="2" />
               <circle cx="50" cy="50" r="10" />
               <circle cx="150" cy="50" r="10" />
               <circle cx="100" cy="120" r="10" />
