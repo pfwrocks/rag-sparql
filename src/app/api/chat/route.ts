@@ -18,6 +18,12 @@ const formatMessage = (message: VercelChatMessage) => {
 };
 
 // Define models
+const gpt4 = new OpenAI({
+  modelName: "gpt-4",
+  streaming: true,
+  temperature: 0
+});
+
 const gpt3 = new OpenAI({
   modelName: "gpt-3.5-turbo",
   streaming: true,
@@ -102,7 +108,7 @@ export async function POST(req: NextRequest) {
       -----------------
       FORMATTING INSTRUCTIONS:
       {format_instructions}
-    `).pipe(gpt3).pipe(sparqlParser);
+    `).pipe(gpt4).pipe(sparqlParser);
 
 
     // Chain to give the final response to users after a SPARQL chain
