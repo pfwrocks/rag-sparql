@@ -1,14 +1,14 @@
-import { Message as VercelChatMessage, StreamingTextResponse } from 'ai'
-import { z } from "zod"
+import { getContext } from '@/utils/context';
+import { executeSparql } from '@/utils/queries';
+import { StreamingTextResponse, Message as VercelChatMessage } from 'ai';
+import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { OpenAI } from "langchain/llms/openai";
 import { StructuredOutputParser } from "langchain/output_parsers";
+import { PromptTemplate } from 'langchain/prompts';
 import { BytesOutputParser, StringOutputParser } from "langchain/schema/output_parser";
 import { RunnableSequence } from "langchain/schema/runnable";
-import { PromptTemplate } from 'langchain/prompts';
-import { OpenAI } from "langchain/llms/openai";
-import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { NextRequest } from 'next/server';
-import { executeSparql } from '@/utils/queries';
-import { getContext } from '@/utils/context';
+import { z } from "zod";
 
 export const runtime = 'edge'
 
@@ -18,6 +18,12 @@ const formatMessage = (message: VercelChatMessage) => {
 };
 
 // Define models
+const gpt4 = new OpenAI({
+  modelName: "gpt-4",
+  streaming: true,
+  temperature: 0
+});
+
 const gpt3 = new OpenAI({
   modelName: "gpt-3.5-turbo",
   streaming: true,
@@ -42,7 +48,7 @@ export async function POST(req: NextRequest) {
     // Determine if the message is asking a question and whether or not it is a question that should be answered with a sparql query
     const routerChain = RunnableSequence.from([
       PromptTemplate.fromTemplate(
-      `Classify text as "sparql" if it can be answered using user's movie, chat, recipes, or calendar data; otherwise, classify as "general". Only one classification should be applied. Do not classify as anything other than "general" or "sparql".
+        `Classify text as "sparql" if it can be answered using user's movie, chat, recipes, or calendar data; otherwise, classify as "general". Only one classification should be applied. Do not classify as anything other than "general" or "sparql".
       -----------------
       Current conversation:
       {chat_history}
@@ -102,8 +108,9 @@ export async function POST(req: NextRequest) {
       -----------------
       FORMATTING INSTRUCTIONS:
       {format_instructions}
-    `).pipe(gpt3).pipe(sparqlParser);
-  
+    `).pipe(gpt4).pipe(sparqlParser);
+
+
     // Chain to give the final response to users after a SPARQL chain
     const responseChain = PromptTemplate.fromTemplate(
       `You are an AI assistant for Datacrate.io users ask you questions and you return an answer in a polite manner. The question asked is below below delimited by <>. The fetched results are from a query that could assist with the answer, the results are delimited by triple apostrophes. Based on the question asked, and the json results of the query, summarize an answer to return to the user. Do not refer to the query or the results, just act like you knew the information and you're telling it to the user.
@@ -126,8 +133,9 @@ export async function POST(req: NextRequest) {
       chat_history: formattedPreviousMessages.join("\n"),
     });
 
+
     if (routerRes.toLowerCase().includes("sparql")) {
-      
+
       const pinecone_results = await getContext(lastMessage);
 
       const sparqlQueries = await sparqlChain.invoke({
@@ -136,16 +144,16 @@ export async function POST(req: NextRequest) {
         format_instructions: sparqlParser.getFormatInstructions(),
         pinecone_results: pinecone_results,
       });
-      
+
       const qResults: string[] = [];
       for (let i = 0; i < sparqlQueries.queries.length; i++) {
-          const qRes = await executeSparql(sparqlQueries.queries[i]);
-          qResults.push(qRes);
+        const qRes = await executeSparql(sparqlQueries.queries[i]);
+        qResults.push(qRes);
       }
-  
+
       const joinedResult: string = qResults.map(result => JSON.stringify(result)).join(',');
-  
-      console.log(joinedResult);
+
+      console.log(`joinedResult: ${joinedResult}`);
 
       const stream = await responseChain.stream({
         question: lastMessage,
@@ -157,18 +165,18 @@ export async function POST(req: NextRequest) {
         headers: {
           "x-queries": JSON.stringify(sparqlQueries.queries),
           "x-descriptions": JSON.stringify(sparqlQueries.description),
-          "x-results": joinedResult,
+          "x-results": JSON.stringify(qResults),
         },
       });
     } else if (routerRes.toLowerCase().includes("general")) {
-      
+
       const stream = await generalChain.stream({
         question: lastMessage,
         chat_history: formattedPreviousMessages.join("\n"),
       });
       return new StreamingTextResponse(stream);
     } else {
-      
+
       const stream = await generalChain.stream({
         question: lastMessage,
         chat_history: formattedPreviousMessages.join("\n"),
@@ -176,6 +184,7 @@ export async function POST(req: NextRequest) {
       return new StreamingTextResponse(stream);
     }
   } catch (e) {
+    console.log('/api/chat had an error')
     throw (e)
   }
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { AiFillGithub } from "react-icons/ai";
 
 interface InstructionModalProps {
   isOpen: boolean;
@@ -30,13 +29,13 @@ const InstructionModal: React.FC<InstructionModalProps> = ({
         <br />
         <p>
           Examples of the types of data loaded for this demo:
-          <ul>
-            <li>- Movies (With various metadata about the movies as well as when the user watched them or added them to their list)</li>
-            <li>- Chat (This includes three different fake chat threads between different fictional characters)</li>
-            <li>- Recipes (This includes a list of recipes as well as the ingredients and instructions for each recipe)</li>
-            <li>- and Calendar (This includes various calendar events that the ficticious user has added to their calendar)</li>
-          </ul>
         </p>
+        <ul>
+          <li>- Movies (With various metadata about the movies as well as when the user watched them or added them to their list)</li>
+          <li>- Chat (This includes three different fake chat threads between different fictional characters)</li>
+          <li>- Recipes (This includes a list of recipes as well as the ingredients and instructions for each recipe)</li>
+          <li>- and Calendar (This includes various calendar events that the ficticious user has added to their calendar)</li>
+        </ul>
         <br />
         <p>
           No markdown splitting, no recursive text splitting, the model just queries
