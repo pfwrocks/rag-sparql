@@ -58,22 +58,25 @@ const Page: React.FC = () => {
   if (!descsString || !queriesString || !resultsString) {
     throw new Error('desc, query, or result headers do not exist!');
   }
+    const decDescsString: string = Buffer.from(descsString, 'base64').toString('utf8');
+    const decQueriesString: string = Buffer.from(queriesString, 'base64').toString('utf8');
+    const decResultsString: string = Buffer.from(resultsString, 'base64').toString('utf8');
 
     // After parsing
-    if (!Array.isArray(JSON.parse(descsString))) {
-        console.error('descsString is not a valid JSON array:', descsString);
+    if (!Array.isArray(JSON.parse(decDescsString))) {
+        console.error('descsString is not a valid JSON array:', decDescsString);
     }
-    if (!Array.isArray(JSON.parse(queriesString))) {
-        console.error('queriesString is not a valid JSON array:', queriesString);
+    if (!Array.isArray(JSON.parse(decQueriesString))) {
+        console.error('queriesString is not a valid JSON array:', decQueriesString);
     }
-    if (!Array.isArray(JSON.parse(resultsString))) {
-        console.error('resultsString is not a valid JSON array:', resultsString);
+    if (!Array.isArray(JSON.parse(decResultsString))) {
+        console.error('resultsString is not a valid JSON array:', decResultsString);
     }
 
   // Parse the headers
-  const descs = JSON.parse(descsString) as string[];
-  const queries = JSON.parse(queriesString) as string[];  // Replace any[] if you have a specific type for queries
-  const results = JSON.parse(resultsString).map((result: any) => JSON.stringify(result)) as string[];  // Replace any[] if you have a specific type for results
+  const descs = JSON.parse(decDescsString) as string[];
+  const queries = JSON.parse(decQueriesString) as string[];  // Replace any[] if you have a specific type for queries
+  const results = JSON.parse(decResultsString).map((result: any) => JSON.stringify(result)) as string[];  // Replace any[] if you have a specific type for results
 
   // Check if parsing was successful
   if (!descs || !queries || !results) {
