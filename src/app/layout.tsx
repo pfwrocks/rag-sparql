@@ -1,8 +1,8 @@
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
-  title: "LLM Demo",
-  description: "LLM Demo",
+  title: "Datacrate - Demo",
+  description: "Datacrate -  Demo",
 };
 
 import { Metadata } from "next";
