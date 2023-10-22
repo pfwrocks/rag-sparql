@@ -144,29 +144,11 @@ const Page: React.FC = () => {
           messages={messages}
         />
         <div className="absolute transform translate-x-full transition-transform duration-500 ease-in-out right-0 w-2/3 h-full bg-gray-700 overflow-y-auto lg:static lg:translate-x-0 lg:w-2/5 lg:mx-2 rounded-lg">
-          {/* <Context className="" selected={context} /> */}
           
           <div
       className={`flex flex-col border-2 overflow-y-auto rounded-lg border-gray-500 w-full`}
     >
       <div className="flex flex-col items-start sticky top-0 w-full">
-
-        {/* { !gotMessages && <div className="text-left w-full flex flex-col rounded-b-lg bg-gray-600 p-3 subpixel-antialiased">
-          <div className="flex justify-center text-blue-500">
-            <svg width="200" height="150" xmlns="http://www.w3.org/2000/svg" fill="currentcolor">
-              <line x1="50" y1="50" x2="150" y2="50" stroke="black" strokeWidth="2" />                
-              <line x1="50" y1="50" x2="100" y2="120" stroke="black" strokeWidth="2" />
-              <line x1="50" y1="50" x2="30" y2="120" stroke="black" strokeWidth="2" />
-              <line x1="50" y1="50" x2="130" y2="20" stroke="black" strokeWidth="2" />
-              <circle cx="50" cy="50" r="10" />
-              <circle cx="150" cy="50" r="10" />
-              <circle cx="100" cy="120" r="10" />
-              <circle cx="30" cy="120" r="10" />
-              <circle cx="130" cy="20" r="10" />
-            </svg>
-          </div>
-          <p className="text-center text-lg text-zinc-100 mb-4">Searching...</p>
-        </div> } */}
         { !gotMessages && <GraphAnimation /> }
         { gotMessages && queries.map((q) => <Query key={q.query} query={q.query} description={q.description} result={q.result} />)}
       </div>
