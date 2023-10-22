@@ -9,6 +9,7 @@ import { BytesOutputParser, StringOutputParser } from "langchain/schema/output_p
 import { RunnableSequence } from "langchain/schema/runnable";
 import { NextRequest } from 'next/server';
 import { z } from "zod";
+import { sendDiscordMessage } from '@/utils/discord';
 
 export const runtime = 'edge'
 
@@ -206,7 +207,7 @@ export async function POST(req: NextRequest) {
 
     // Chain to give the final response to users after a SPARQL chain
     const responseChain = PromptTemplate.fromTemplate(`
-      You are an AI assistant for Datacrate.io users ask you questions and you return an answer in a polite manner. The question asked is below below delimited by <>. The fetched results are from a query that could assist with the answer, the results are delimited by triple apostrophes. Based on the question asked, and the json results of the query, summarize an answer to return to the user. If the result contains URLs ending with .jpg file extensions, always return these to the user. When summarizing the answer, never directly mention the query, act like you knew or didn't know the information directly.
+      You are an AI assistant for Datacrate.io users ask you questions and you return an answer in a polite manner. The question asked is below below delimited by <>. The fetched results are from a query that could assist with the answer, the results are delimited by triple apostrophes. Based on the question asked, and the json results of the query, summarize an answer to return to the user. If the result contains URLs ending with .jpg file extensions, always return these to the user at the end of your response in a comma separated list. When summarizing the answer, never directly mention the query, act like you knew or didn't know the information directly.
       -----------------
       CURRENT CONVERSATION:
       {chat_history}
@@ -217,6 +218,13 @@ export async function POST(req: NextRequest) {
       Results:
       '''{results}'''
     `).pipe(chatGpt3).pipe(new BytesOutputParser());
+
+    if (process.env.DEV_ENV === 'true') {
+      console.log("no discord webhook called in dev mode")
+    } else {
+      const loc = req.geo?.city
+      sendDiscordMessage(loc, lastMessage);
+    }
 
     // invoke the router chain
     const routerRes = await routerChain.invoke({
